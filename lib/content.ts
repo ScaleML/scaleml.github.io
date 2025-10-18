@@ -123,8 +123,40 @@ export function getBlogs(): BlogPost[] {
 }
 
 export function getPublications(): Publication[] {
-  const publications = getContentByType<Publication>('publications');
-  return publications.sort((a, b) => b.year - a.year);
+  const publicationsDirectory = path.join(contentDirectory, 'publications');
+
+  if (!fs.existsSync(publicationsDirectory)) {
+    return [];
+  }
+
+  const allPublications: Publication[] = [];
+
+  // Read all subdirectories (year folders)
+  const entries = fs.readdirSync(publicationsDirectory, { withFileTypes: true });
+
+  for (const entry of entries) {
+    if (entry.isDirectory()) {
+      const yearDir = path.join(publicationsDirectory, entry.name);
+      const files = fs.readdirSync(yearDir);
+
+      files
+        .filter((fileName) => fileName.endsWith('.md'))
+        .forEach((fileName) => {
+          const slug = fileName.replace(/\.md$/, '');
+          const fullPath = path.join(yearDir, fileName);
+          const fileContents = fs.readFileSync(fullPath, 'utf8');
+          const { data, content } = matter(fileContents);
+
+          allPublications.push({
+            slug,
+            ...data,
+            content,
+          } as Publication);
+        });
+    }
+  }
+
+  return allPublications.sort((a, b) => b.year - a.year);
 }
 
 export function getContentBySlug<T>(type: string, slug: string): T | null {

@@ -93,7 +93,7 @@ export default function PublicationsClient({ publications }: PublicationsClientP
                 <PublicationCard
                   key={pub.slug}
                   publication={pub}
-                  authorLimit={6}
+                  authorLimit={10}
                 />
               ))}
             </div>

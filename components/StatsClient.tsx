@@ -13,7 +13,7 @@ interface StatsClientProps {
 export default function StatsClient({ researchersCount, publicationsCount, newsCount, projectsCount }: StatsClientProps) {
   const stats = [
     { icon: Users, label: 'Researchers', value: `${researchersCount}+` },
-    { icon: BookOpen, label: 'Publications', value: `${publicationsCount}+` },
+    { icon: BookOpen, label: 'Papers', value: `${publicationsCount}+` },
     { icon: FolderKanban, label: 'Research Projects', value: `${projectsCount}+` },
     { icon: Newspaper, label: 'News', value: `${newsCount}+` },
   ];
