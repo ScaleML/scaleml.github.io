@@ -6,7 +6,7 @@ image: "https://scholar.googleusercontent.com/citations?view_op=medium_photo&use
 # website: ""
 email: "hc81@illinois.edu"
 scholar: "https://scholar.google.com/citations?user=ZzTBk68AAAAJ&hl=en&oi=ao"
-# github: ""
+github: "jeremy-chy"
 # linkedin: ""
 twitter: "hc81Jeremy"
 ---

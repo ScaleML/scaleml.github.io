@@ -6,7 +6,7 @@ image: "https://haoyifan99.github.io/photo.jpg"
 website: "https://haoyifan99.github.io/index.html"
 email: "yifanh12 AT Illinois DOT edu"
 scholar: "https://scholar.google.com.hk/citations?user=lzI8IicAAAAJ&hl=zh-CN"
-# github: ""
+github: "haoyifan99"
 # linkedin: ""
 # twitter: ""
 ---
