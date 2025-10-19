@@ -1,7 +1,7 @@
 ---
 name: "Hanyang Chen"
 role: "Master Student"
-# bio: ""
+bio: "I am a second-year MSCS student in UIUC, where i explore Post-training for Multimodal Large Model(MLM), with a particular focus on Embodied AI."
 image: "https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=ZzTBk68AAAAJ&citpid=4"
 # website: ""
 email: "hc81@illinois.edu"
