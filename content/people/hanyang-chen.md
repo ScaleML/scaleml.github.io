@@ -11,3 +11,6 @@ github: "jeremy-chy"
 twitter: "hc81Jeremy"
 ---
 
+I am a second-year MSCS student in UIUC, where i am fortunate to receive advice from Prof.Tong Zhang. Prior to this, i obtained my Bachelor of Science in HKU.
+
+My research interest lies in Post-training for Multimodal Large Model(MLM), with a particular focus on Embodied AI and Robotics. 
