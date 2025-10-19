@@ -8,8 +8,12 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Research Lab - Leading Innovation in AI",
+  title: "ScaleML Lab",
   description: "Cutting-edge research in artificial intelligence and machine learning",
+  icons: {
+    icon: '/icon.svg',
+    apple: '/apple-icon.svg',
+  },
 };
 
 export default function RootLayout({

@@ -23,7 +23,7 @@ export default function Hero() {
             className="inline-flex items-center space-x-2 bg-primary-100 text-primary-700 dark:bg-primary-500/20 dark:text-primary-200 px-4 py-2 rounded-full mb-8"
           >
             <Sparkles size={16} />
-            <span className="text-sm font-medium">Leading AI Research Laboratory</span>
+            <span className="text-sm font-medium">Cutting-edge AI and ML Research Laboratory</span>
           </motion.div>
 
           {/* Main heading */}
