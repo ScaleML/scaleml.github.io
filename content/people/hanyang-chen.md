@@ -1,7 +1,7 @@
 ---
 name: "Hanyang Chen"
 role: "Master Student"
-# bio: ""
+bio: "I am a second-year MSCS student in UIUC, where i explore Post-training for Multimodal Large Model(MLM), with a particular focus on Embodied AI."
 image: "https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=ZzTBk68AAAAJ&citpid=4"
 # website: ""
 email: "hc81@illinois.edu"
@@ -11,3 +11,6 @@ github: "jeremy-chy"
 twitter: "hc81Jeremy"
 ---
 
+I am a second-year MSCS student in UIUC, where i am fortunate to receive advice from Prof.Tong Zhang. Prior to this, i obtained my Bachelor of Science in HKU.
+
+My research interest lies in Post-training for Multimodal Large Model(MLM), with a particular focus on Embodied AI and Robotics. 
