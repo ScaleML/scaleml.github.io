@@ -2,7 +2,7 @@
 name: "Jiarui Yao"
 role: "PhD Student"
 bio: "I am a second-year Ph.D. student in computer science at UIUC."
-image: "https://maxwelljryao.github.io/assets/img/pic_jiarui.png"
+image: "https://maxwelljryao.github.io/assets/pic_jiarui-480.png"
 website: "https://maxwelljryao.github.io/"
 email: "jiarui14 [at] illinois [dot] edu"
 scholar: "https://scholar.google.com/citations?user=84fexSEAAAAJ&hl=en"
