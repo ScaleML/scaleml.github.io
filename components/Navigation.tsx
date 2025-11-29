@@ -78,7 +78,7 @@ export default function Navigation() {
     { href: '/publications', label: 'Publications' },
     { href: '/news', label: 'News' },
     { href: '/blog', label: 'Blog' },
-    // { href: '/contact', label: 'Contact' },
+    { href: '/contact', label: 'Contact Us' },
   ];
 
   return (
