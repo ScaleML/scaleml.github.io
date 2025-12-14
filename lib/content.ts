@@ -101,7 +101,37 @@ function getContentByType<T>(type: string): T[] {
 }
 
 export function getPeople(): Person[] {
-  return getContentByType<Person>('people');
+  const peopleDirectory = path.join(contentDirectory, 'people');
+  const alumniDirectory = path.join(contentDirectory, 'people', 'alumni');
+  const people: Person[] = [];
+
+  // Read current members from people/
+  if (fs.existsSync(peopleDirectory)) {
+    const fileNames = fs.readdirSync(peopleDirectory);
+    for (const fileName of fileNames) {
+      if (!fileName.endsWith('.md')) continue;
+      const slug = fileName.replace(/\.md$/, '');
+      const fullPath = path.join(peopleDirectory, fileName);
+      const fileContents = fs.readFileSync(fullPath, 'utf8');
+      const { data, content } = matter(fileContents);
+      people.push({ slug, ...data, content } as Person);
+    }
+  }
+
+  // Read alumni from people/alumni/
+  if (fs.existsSync(alumniDirectory)) {
+    const fileNames = fs.readdirSync(alumniDirectory);
+    for (const fileName of fileNames) {
+      if (!fileName.endsWith('.md')) continue;
+      const slug = fileName.replace(/\.md$/, '');
+      const fullPath = path.join(alumniDirectory, fileName);
+      const fileContents = fs.readFileSync(fullPath, 'utf8');
+      const { data, content } = matter(fileContents);
+      people.push({ slug, ...data, alumni: true, content } as Person);
+    }
+  }
+
+  return people;
 }
 
 export function getProjects(): Project[] {
@@ -184,18 +214,27 @@ export function getPublications(): Publication[] {
 }
 
 export function getContentBySlug<T>(type: string, slug: string): T | null {
-  const fullPath = path.join(contentDirectory, type, `${slug}.md`);
-
-  if (!fs.existsSync(fullPath)) {
-    return null;
+  // For people, also check the alumni subfolder
+  const pathsToCheck = [
+    path.join(contentDirectory, type, `${slug}.md`),
+  ];
+  if (type === 'people') {
+    pathsToCheck.push(path.join(contentDirectory, type, 'alumni', `${slug}.md`));
   }
 
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-  const { data, content } = matter(fileContents);
+  for (const fullPath of pathsToCheck) {
+    if (fs.existsSync(fullPath)) {
+      const fileContents = fs.readFileSync(fullPath, 'utf8');
+      const { data, content } = matter(fileContents);
+      const isAlumni = fullPath.includes('/alumni/');
+      return {
+        slug,
+        ...data,
+        ...(isAlumni ? { alumni: true } : {}),
+        content,
+      } as T;
+    }
+  }
 
-  return {
-    slug,
-    ...data,
-    content,
-  } as T;
+  return null;
 }
