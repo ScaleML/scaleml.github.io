@@ -4,6 +4,7 @@ import { Project } from '@/lib/content';
 import { ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { formatDate } from '@/lib/utils';
 
 interface ProjectCardProps {
   project: Project;
@@ -69,10 +70,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         {/* Date */}
         {project.date && (
           <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-            {new Date(project.date).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-            })}
+            {formatDate(project.date)}
           </p>
         )}
 

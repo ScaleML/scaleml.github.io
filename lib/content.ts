@@ -3,6 +3,7 @@ import 'server-only';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { parse as parseBibtex } from 'bibtex-parse';
 
 const contentDirectory = path.join(process.cwd(), 'content');
 
@@ -66,9 +67,10 @@ export interface Publication {
   pdf?: string;
   doi?: string;
   abstract?: string;
-  bibtex?: string;
+  code?: string;
+  webpage?: string;
+  media?: string;
   tags?: string[];
-  highlights?: string[];
   content: string;
 }
 
@@ -131,28 +133,50 @@ export function getPublications(): Publication[] {
 
   const allPublications: Publication[] = [];
 
-  // Read all subdirectories (year folders)
-  const entries = fs.readdirSync(publicationsDirectory, { withFileTypes: true });
+  // Read all .bib files (e.g., 2024.bib, 2025.bib)
+  const files = fs.readdirSync(publicationsDirectory);
+  const bibFiles = files.filter((f) => f.endsWith('.bib'));
 
-  for (const entry of entries) {
-    if (entry.isDirectory()) {
-      const yearDir = path.join(publicationsDirectory, entry.name);
-      const files = fs.readdirSync(yearDir);
+  for (const bibFile of bibFiles) {
+    const fullPath = path.join(publicationsDirectory, bibFile);
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const entries = parseBibtex(fileContents);
 
-      files
-        .filter((fileName) => fileName.endsWith('.md'))
-        .forEach((fileName) => {
-          const slug = fileName.replace(/\.md$/, '');
-          const fullPath = path.join(yearDir, fileName);
-          const fileContents = fs.readFileSync(fullPath, 'utf8');
-          const { data, content } = matter(fileContents);
+    for (const entry of entries) {
+      // bibtex-parse uses 'itemtype' instead of 'type'
+      if (entry.itemtype !== 'entry') continue;
 
-          allPublications.push({
-            slug,
-            ...data,
-            content,
-          } as Publication);
-        });
+      // Convert fields array to object for easier access
+      const fieldsObj: Record<string, string> = {};
+      if (Array.isArray(entry.fields)) {
+        for (const field of entry.fields) {
+          fieldsObj[field.name] = field.value;
+        }
+      }
+
+      // Parse author string: "Name1 and Name2 and Name3" -> ["Name1", "Name2", "Name3"]
+      const authorStr = fieldsObj.author || '';
+      const authors = authorStr
+        .split(/\s+and\s+/)
+        .map((a: string) => a.trim())
+        .filter((a: string) => a.length > 0);
+
+      allPublications.push({
+        slug: entry.key || '',
+        title: fieldsObj.title || '',
+        authors,
+        venue: fieldsObj.venue || fieldsObj.journal || fieldsObj.booktitle || '',
+        year: parseInt(fieldsObj.year || '0', 10),
+        featured: fieldsObj.featured === 'true',
+        pdf: fieldsObj.arxiv || fieldsObj.pdf || fieldsObj.url || '',
+        doi: fieldsObj.doi || '',
+        abstract: fieldsObj.abstract || '',
+        code: fieldsObj.code || '',
+        webpage: fieldsObj.webpage || '',
+        media: fieldsObj.media || '',
+        tags: fieldsObj.tags ? fieldsObj.tags.split(',').map((t: string) => t.trim()) : [],
+        content: '',
+      });
     }
   }
 

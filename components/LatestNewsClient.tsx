@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Calendar, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { NewsPost } from '@/lib/content';
+import { formatDate } from '@/lib/utils';
 
 interface LatestNewsClientProps {
   news: NewsPost[];
@@ -50,11 +51,7 @@ export default function LatestNewsClient({ news }: LatestNewsClientProps) {
               <div className="p-6">
                 <div className="flex items-center text-sm text-slate-500 dark:text-slate-400 mb-4">
                   <Calendar size={16} className="mr-2" />
-                  {new Date(item.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
+                  {formatDate(item.date)}
                 </div>
                 <h3 className="text-xl font-bold mb-3 hover:text-primary-600 dark:hover:text-primary-300 transition-colors">
                   {item.title}
