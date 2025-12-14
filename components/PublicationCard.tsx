@@ -1,9 +1,8 @@
 'use client';
 
 import { Publication } from '@/lib/content';
-import { FileText, ExternalLink, BookOpen, Copy, Check } from 'lucide-react';
+import { FileText, ExternalLink, BookOpen, Github, Globe, Image } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 
 interface PublicationCardProps {
   publication: Publication;
@@ -11,8 +10,6 @@ interface PublicationCardProps {
 }
 
 export default function PublicationCard({ publication, authorLimit = 3 }: PublicationCardProps) {
-  const [copied, setCopied] = useState(false);
-
   const formatAuthors = (authors: string[]) => {
     if (!authors || authors.length === 0) {
       return '';
@@ -21,14 +18,6 @@ export default function PublicationCard({ publication, authorLimit = 3 }: Public
       return authors.join(', ');
     }
     return `${authors.slice(0, authorLimit).join(', ')} et al.`;
-  };
-
-  const handleCopyBibtex = () => {
-    if (publication.bibtex) {
-      navigator.clipboard.writeText(publication.bibtex);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
   };
 
   return (
@@ -68,20 +57,6 @@ export default function PublicationCard({ publication, authorLimit = 3 }: Public
             <p className="text-slate-600 dark:text-slate-300 mb-4 text-sm line-clamp-2">
               {publication.abstract}
             </p>
-          )}
-
-          {/* Highlights */}
-          {publication.highlights && publication.highlights.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-3">
-              {publication.highlights.map((highlight) => (
-                <span
-                  key={highlight}
-                  className="px-3 py-1 bg-accent-100 text-accent-700 dark:bg-accent-500/20 dark:text-accent-200 text-sm rounded-full font-semibold"
-                >
-                  {highlight}
-                </span>
-              ))}
-            </div>
           )}
 
           {/* Tags */}
@@ -124,23 +99,40 @@ export default function PublicationCard({ publication, authorLimit = 3 }: Public
               </a>
             )}
 
-            {publication.bibtex && (
-              <button
-                onClick={handleCopyBibtex}
+            {publication.code && (
+              <a
+                href={publication.code}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center px-4 py-2 bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-sm font-medium"
               >
-                {copied ? (
-                  <>
-                    <Check size={16} className="mr-2 text-green-600" />
-                    Copied!
-                  </>
-                ) : (
-                  <>
-                    <Copy size={16} className="mr-2" />
-                    BibTeX
-                  </>
-                )}
-              </button>
+                <Github size={16} className="mr-2" />
+                Code
+              </a>
+            )}
+
+            {publication.webpage && (
+              <a
+                href={publication.webpage}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-4 py-2 bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-sm font-medium"
+              >
+                <Globe size={16} className="mr-2" />
+                Webpage
+              </a>
+            )}
+
+            {publication.media && (
+              <a
+                href={publication.media}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-4 py-2 bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-sm font-medium"
+              >
+                <Image size={16} className="mr-2" />
+                Media
+              </a>
             )}
           </div>
         </div>

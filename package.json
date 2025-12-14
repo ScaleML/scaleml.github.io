@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",
+    "bibtex-parse": "^2.1.0",
     "framer-motion": "^11.2.10",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
@@ -31,6 +32,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.19",
+    "baseline-browser-mapping": "^2.9.7",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.3",
     "postcss": "^8.4.38",

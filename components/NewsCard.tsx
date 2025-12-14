@@ -4,6 +4,7 @@ import { NewsPost } from '@/lib/content';
 import { Calendar, User, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { formatDate } from '@/lib/utils';
 
 interface NewsCardProps {
   post: NewsPost;
@@ -32,11 +33,7 @@ export default function NewsCard({ post }: NewsCardProps) {
         <div className="flex items-center space-x-4 text-sm text-slate-500 mb-3">
           <div className="flex items-center">
             <Calendar size={16} className="mr-1" />
-            {new Date(post.date).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
+            {formatDate(post.date)}
           </div>
           {post.author && (
             <div className="flex items-center">
